@@ -8,29 +8,23 @@ from king import King
 
 def main():
     board = Board()
+    board.game = [[None for _ in range(8)] for _ in range(8)]
 
-    # Try to move the white rook at bottom-left
-    print("\nAttempting move: a1 → h8")
+    # Place white king at e4 (coordinates [4][4])
+    w_king = King("white")
+    board.game[4][4] = w_king
 
-    bishop = board.game[7][2] # white rook at a1
-    queen = Queen("white")
-    b2bishop = Bishop("black")
-    board.game[7][0] = queen
-    board.game[6][1] = None
-    board.game[0][7] = None
-    board.game[1][6] =  None
+    # Place black king at d5 (adjacent diagonally)
+    b_king = King("black")
+    board.game[3][3] = b_king
 
     print("Initial Board:")
     board.displayBoard()
 
-    move_result= queen.makeMoves("a1","h8", board)
-
-    if move_result is False:
-        print("Move blocked!")
+    # Test if black king threatens the white king
+    if b_king.isCheck("d5", board, "white"):
+        print("✅ Check detected! (Black king threatens White king)")
     else:
-        print("Move successful!")
-
-    board.displayBoard()
+        print("❌ No check.")
 
 main()
-

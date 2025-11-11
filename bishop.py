@@ -160,9 +160,9 @@ class Bishop(Piece):
 
     def findKing(self,board,color):
 
-        for row in range(board.rows):
+        for row in range(len(board.game)):
 
-            for col in range(board.cols):
+            for col in range(len(board.game[row])):
 
                 if board.game[row][col] is not None:
 

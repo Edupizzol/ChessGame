@@ -1,3 +1,5 @@
+from typing import is_protocol
+
 from piece import Piece
 
 class Rook(Piece):
@@ -90,4 +92,75 @@ class Rook(Piece):
 
             return False
 
-                            
+    def isCheck(self, input, board, color):
+
+        start = self.convertMoves(input)
+
+        startLine = start[1]
+        startColumn = start[0]
+
+        position = self.findKing(board, color)
+        endLine = position[0]
+        endColumn = position[1]
+
+        isPossible = True
+
+        if startLine == endLine:
+
+            if endColumn > startColumn :
+
+                for i in range((startColumn + 1), endColumn, +1):
+
+                    if board.game[startLine][i] is not None:
+
+                        isPossible = False
+                        break
+
+            else:
+
+                for i in range((startColumn - 1), endColumn, -1):
+
+                    if board.game[startLine][i] is not None:
+
+                        isPossible = False
+                        break
+
+        elif startColumn == endColumn:
+
+            if endLine > startLine:
+
+                for i in range((startLine + 1), endLine, +1):
+
+                    if board.game[i][startColumn] is not None:
+
+                        isPossible = False
+                        break
+
+            else:
+
+                for i in range((startLine - 1), endLine, -1):
+
+                    if board.game[i][startColumn] is not None:
+
+                        isPossible = False
+                        break
+
+        else:
+
+            isPossible = False
+
+        return isPossible
+
+
+    def findKing(self,board,color):
+
+        for row in range(len(board.game)):
+
+            for col in range(len(board.game[row])):
+
+                if board.game[row][col] is not None:
+
+                    if (board.game[row][col].color == color
+                       and board.game[row][col].symbol == 'k'):
+
+                            return [row,col]
