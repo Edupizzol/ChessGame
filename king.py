@@ -71,10 +71,14 @@ class King(Piece):
                 game[startLine][startColumn] = None
                 game[endLine][endColumn] = self
 
+                return True
+
             elif (game[endLine][endColumn] is None):
 
                 game[startLine][startColumn] = None
                 game[endLine][endColumn] = self
+
+                return True
 
             else:
 

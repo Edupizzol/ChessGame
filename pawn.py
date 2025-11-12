@@ -107,4 +107,68 @@ class Pawn(Piece):
                 #movimento inválido
                 return False
 
-        
+    def isCheck(self, input, board, color):
+
+        start = self.convertMoves(input)
+
+        startLine = start[1]
+        startColumn = start[0]
+
+        position = self.findKing(board, color)
+        endLine = position[0]
+        endColumn = position[1]
+
+        if self.color == 'white':
+
+            if (endLine == startLine - 1
+               and startColumn == endColumn + 1
+               and board.game[endLine][endColumn] is not None
+               and board.game[endLine][endColumn].color != self.color
+            ):
+
+                return True
+
+            elif(endLine == startLine - 1
+               and startColumn == endColumn - 1
+               and board.game[endLine][endColumn] is not None
+               and board.game[endLine][endColumn].color != self.color):
+
+                return True
+
+            else:
+
+                return False
+
+        elif self.color == 'black':
+
+            if (endLine == startLine + 1
+               and startColumn == endColumn + 1
+               and board.game[endLine][endColumn] is not None
+               and board.game[endLine][endColumn].color != self.color
+            ):
+
+                return True
+
+            elif(endLine == startLine + 1
+               and startColumn == endColumn - 1
+               and board.game[endLine][endColumn] is not None
+               and board.game[endLine][endColumn].color != self.color):
+
+                return True
+
+            else:
+
+                return False
+
+    def findKing(self,board,color):
+
+        for row in range(len(board.game)):
+
+            for col in range(len(board.game[row])):
+
+                if board.game[row][col] is not None:
+
+                    if (board.game[row][col].color == color
+                       and board.game[row][col].symbol == 'k'):
+
+                            return [row,col]
