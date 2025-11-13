@@ -73,6 +73,9 @@ def main():
                 continue  # retry the move (real board untouched)
 
             # Jogada no Tabuleiro Real
+
+            print(f"Trying move {start} -> {end}")
+
             if not piece.makeMoves(start, end, board):
                 print("❌ Invalid move for this piece.")
                 continue

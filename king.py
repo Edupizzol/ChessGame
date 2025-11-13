@@ -25,6 +25,45 @@ class King(Piece):
 
         isPossible = False
 
+        if not hasattr(self, "hasMoved"):
+            self.hasMoved = False
+
+        # Brancas
+        if self.color == "white" and not self.hasMoved:
+            # e1 → g1
+            if startLine == 7 and startColumn == 4 and endLine == 7 and endColumn == 6:
+                if self.castle(board, startLine, startColumn, endLine, endColumn):
+                    self.hasMoved = True
+                    return True
+                else:
+                    return False  # stop here if castle failed
+
+            # e1 → c1
+            elif startLine == 7 and startColumn == 4 and endLine == 7 and endColumn == 2:
+                if self.castle(board, startLine, startColumn, endLine, endColumn):
+                    self.hasMoved = True
+                    return True
+                else:
+                    return False
+
+        # Pretas
+        if self.color == "black" and not self.hasMoved:
+            # e8 → g8
+            if startLine == 0 and startColumn == 4 and endLine == 0 and endColumn == 6:
+                if self.castle(board, startLine, startColumn, endLine, endColumn):
+                    self.hasMoved = True
+                    return True
+                else:
+                    return False
+
+            # e8 → c8
+            elif startLine == 0 and startColumn == 4 and endLine == 0 and endColumn == 2:
+                if self.castle(board, startLine, startColumn, endLine, endColumn):
+                    self.hasMoved = True
+                    return True
+                else:
+                    return False
+
         if (endLine == startLine - 1) and (endColumn == startColumn + 1):
 
             isPossible = True
@@ -70,6 +109,7 @@ class King(Piece):
 
                 game[startLine][startColumn] = None
                 game[endLine][endColumn] = self
+                self.hasMoved = True
 
                 return True
 
@@ -77,6 +117,7 @@ class King(Piece):
 
                 game[startLine][startColumn] = None
                 game[endLine][endColumn] = self
+                self.hasMoved = True
 
                 return True
 
@@ -151,3 +192,37 @@ class King(Piece):
                        and board.game[row][col].symbol == 'k'):
 
                             return [row,col]
+
+    def castle(self, board, startLine, startColumn, endLine, endColumn):
+
+            if startLine == endLine and (startColumn + 2) == endColumn:
+
+                if (board.game[startLine][startColumn + 1] is None
+                    and board.game[startLine][startColumn + 2] is None
+                ):
+
+                    board.game[startLine][startColumn + 2] = self
+                    board.game[startLine][startColumn + 1] = board.game[startLine][startColumn + 3]
+                    board.game[startLine][startColumn + 3] = None
+                    board.game[startLine][startColumn] = None
+
+                    return True
+
+            elif startLine == endLine and (startColumn - 2) == endColumn:
+
+                if (board.game[startLine][startColumn -1] is None
+                    and board.game[startLine][startColumn - 2] is None
+                    and board.game[startLine][startColumn - 3] is None
+                ):
+
+                    board.game[startLine][startColumn - 2] = self
+                    board.game[startLine][startColumn - 1] = board.game[startLine][startColumn -4]
+                    board.game[startLine][startColumn - 4] = None
+                    board.game[startLine][startColumn] = None
+
+                    return True
+
+            return False
+
+
+
