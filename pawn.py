@@ -1,4 +1,5 @@
 from piece import Piece
+from queen import Queen
 
 class Pawn(Piece):
 
@@ -48,6 +49,8 @@ class Pawn(Piece):
                     game[endLine][endColumn] = self
                     game[startLine][startColumn] = None
                     self.has_moved = True
+                    if self.color == 'white' and endLine == 0:
+                        game[endLine][endColumn] = Queen('white')
 
                     return True
             
@@ -59,6 +62,8 @@ class Pawn(Piece):
                     game[endLine][endColumn] = self
                     game[startLine][startColumn] = None
                     self.has_moved = True
+                    if self.color == 'white' and endLine == 0:
+                        game[endLine][endColumn] = Queen('white')
 
                     return True
         
@@ -88,6 +93,8 @@ class Pawn(Piece):
                     game[endLine][endColumn] = self
                     game[startLine][startColumn] = None
                     self.has_moved = True
+                    if self.color == 'black' and endLine == 7:
+                        game[endLine][endColumn] = Queen('black')
 
                     return True
             
@@ -99,6 +106,8 @@ class Pawn(Piece):
                     game[endLine][endColumn] = self
                     game[startLine][startColumn] = None
                     self.has_moved = True
+                    if self.color == 'black' and endLine == 7:
+                        game[endLine][endColumn] = Queen('black')
 
                     return True
         
