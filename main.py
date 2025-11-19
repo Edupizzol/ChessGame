@@ -7,7 +7,6 @@ from knight import Knight
 from bishop import Bishop
 from king import King
 
-
 def getPiece(board, position):
     col = ord(position[0]) - ord('a')
     row = 8 - int(position[1])
